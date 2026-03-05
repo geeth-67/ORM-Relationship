@@ -5,3 +5,5 @@ from teacher_routes import router as teacher_router
 app = FastAPI(
     title="Teacher",
 )
+
+app.include_router(teacher_router)
