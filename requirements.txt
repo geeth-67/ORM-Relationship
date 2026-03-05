@@ -6,3 +6,11 @@ pydantic
 python-dotenv
 langchain
 langchain-openai
+langchain-community
+langgraph
+greenlet
+langchain-core
+psycopg
+langgraph.checkpoint.postgres
+gradio
+starlette
