@@ -27,3 +27,23 @@ class Teacher(Base):
         lazy="joined"                       #lazy="joined" mean set loading to eager loading
     )
 
+class TeacherProfile(Base):
+    __tablename__ = 'teacher_profiles'
+
+    id : Mapped[int] = mapped_column(primary_key=True , index=True )
+    teacher_id : Mapped[int] = mapped_column(
+        ForeignKey('teachers.id' , ondelete='CASCADE'),
+    )
+    qualifications: Mapped[str] = mapped_column(String(300), nullable=False)
+    department: Mapped[Optional[str]] = mapped_column()
+    office_number: Mapped[Optional[str]] = mapped_column(String(30))
+    bio : Mapped[Text] = mapped_column(Text)
+
+    created_at : Mapped[datetime] = mapped_column(
+        server_default=func.now(),
+        default=datetime.now()
+    )
+
+    teacher: Mapped["Teacher"] = relationship(
+        back_populates="profile",
+    )
