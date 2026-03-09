@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from sqlalchemy import String, func, Text, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
@@ -27,6 +27,13 @@ class Teacher(Base):
         lazy="joined"                       #lazy="joined" mean set loading to eager loading
     )
 
+    courses: Mapped[List["Courses"]] = relationship(
+        back_populates="teacher",
+        cascade="all, delete-orphan",
+        lazy="selectin"
+    )
+
+
 class TeacherProfile(Base):
     __tablename__ = 'teacher_profiles'
 
@@ -46,4 +53,20 @@ class TeacherProfile(Base):
 
     teacher: Mapped["Teacher"] = relationship(
         back_populates="profile",
+    )
+
+class Courses(Base):
+    __tablename__ = 'courses'
+
+    id : Mapped[int] = mapped_column(primary_key=True , index=True )
+    teacher_id : Mapped[int] = mapped_column(
+        ForeignKey('teachers.id' , ondelete='CASCADE')
+    )
+    name : Mapped[str] = mapped_column(String(300), nullable=False)
+    code : Mapped[str] = mapped_column(String(50), nullable=False)
+    description : Mapped[str] = mapped_column(Text)
+    is_active : Mapped[bool] = mapped_column(default=True , nullable=False)
+    credits: Mapped[datetime] = mapped_column(default=5)
+    created_at: Mapped[datetime] = mapped_column(
+        server_default=func.now(), default=datetime.now()
     )
