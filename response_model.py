@@ -34,3 +34,14 @@ class CourseBase(BaseModel):
     credits: int = Field(default=5, ge=1, le=10)
     is_active: bool = True
 
+
+class CourseResponse(CourseBase):
+    id: int
+    teacher_id: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+
