@@ -70,3 +70,5 @@ class Courses(Base):
     created_at: Mapped[datetime] = mapped_column(
         server_default=func.now(), default=datetime.now()
     )
+
+    teacher: Mapped["Teacher"] = relationship(back_populates="courses")
