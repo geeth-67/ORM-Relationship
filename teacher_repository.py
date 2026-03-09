@@ -22,9 +22,14 @@ class TeacherRepository:
             await self.db.commit()
             await self.db.refresh(teacher)
             return teacher
+
+
         except IntegrityError:
             await self.db.rollback()
             raise HTTPException(
                 status_code=409,
                 detail=f"A teacher with email '{data.email}' already exists."
             )
+
+    async def get_by_id(self, teacher_id: int) -> Teacher | None:
+        pass
