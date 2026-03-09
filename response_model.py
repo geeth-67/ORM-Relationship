@@ -45,3 +45,22 @@ class CourseResponse(CourseBase):
 
 
 
+#------------------------------------------------------------------------------#
+
+
+
+class TeacherBase(BaseModel):
+    name: str = Field(..., min_length=1, max_length=100)
+    email: str
+
+class TeacherCreate(TeacherBase):
+    profile: Optional[TeacherProfileCreate] = None
+
+class TeacherResponse(TeacherBase):
+    id: int
+    created_at: datetime
+    profile: Optional[TeacherProfileResponse] = None
+    course: List[CourseResponse] = []
+
+    class Config:
+        from_attributes = True
