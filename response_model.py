@@ -28,16 +28,18 @@ class TeacherProfileResponse(TeacherProfileBase):
 
 
 class CourseBase(BaseModel):
+    teacher_id: int
     name: str = Field(..., min_length=1, max_length=300)
     code: str = Field(..., min_length=1, max_length=50)
     description: Optional[str] = None
     credits: int = Field(default=5, ge=1, le=10)
     is_active: bool = True
 
+class CourseCreate(CourseBase):
+    student_ids : List[int] = []
 
 class CourseResponse(CourseBase):
     id: int
-    teacher_id: int
     created_at: datetime
 
     class Config:
@@ -61,6 +63,24 @@ class TeacherResponse(TeacherBase):
     created_at: datetime
     profile: Optional[TeacherProfileResponse] = None
     courses: List[CourseResponse] = []
+
+    class Config:
+        from_attributes = True
+
+
+#------------------------------------------------------------------------------#
+
+
+class StudentBase(BaseModel):
+    name: str = Field(..., min_length=1, max_length=100)
+    email: str
+    enrollment_year: int = Field(..., ge=2000, le=2100)
+
+class StudentCreate(StudentBase):
+    pass
+
+class StudentResponse(StudentBase):
+    id: int
 
     class Config:
         from_attributes = True

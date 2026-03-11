@@ -104,3 +104,9 @@ class Student(Base):
     name : Mapped[str] = mapped_column(String(300), nullable=False)
     email : Mapped[str] = mapped_column(String(255), nullable=False)
     enrollment_year : Mapped[int]
+
+    courses : Mapped[List["Course"]] = relationship(
+        secondary=enrollment,
+        back_populates="student",
+        lazy="selectin",
+    )
