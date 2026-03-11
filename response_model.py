@@ -60,7 +60,7 @@ class TeacherResponse(TeacherBase):
     id: int
     created_at: datetime
     profile: Optional[TeacherProfileResponse] = None
-    course: List[CourseResponse] = []
+    courses: List[CourseResponse] = []
 
     class Config:
         from_attributes = True
