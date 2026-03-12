@@ -10,7 +10,9 @@ class StudentRepository:
         self.db = db
 
     async def create_student(self, data: StudentCreate) -> Student:
-        student = Student(name=data.name, email=data.email)
+        student = Student(name=data.name,
+                          email=data.email,
+                          enrollment_year=data.enrollment_year,)
 
         self.db.add(student)
         await self.db.commit()
